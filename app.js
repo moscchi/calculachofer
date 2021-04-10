@@ -12,7 +12,7 @@ function calcularTodo(){
     var semana = document.getElementById("semana").value;
     console.log(peaje, nombre, apellido, cashBrut, cashHand);
     
-    if(nombre == null || cashBrut == 0 || cashHand === 0){
+    if(nombre == "" || cashBrut == 0 || cashHand === 0){
         document.getElementById('resultados').innerHTML=`
                 <div id="resultados">
                 <div class="card-body" style="background-color: lightseagreen;">
@@ -27,7 +27,7 @@ function calcularTodo(){
                 <div id="resultados">
                     <div class="card-body" style="background-color: lightseagreen;">
                         Los resultados de la ${semana} son:<br>
-                        Debo pasarle a ${nombre} la suma de $${balanc}.
+                        Corresponde $${correspondencia} a cada uno. Debo pasarle a ${nombre} la suma de $${balanc}.
                     </div>
                 </div>`
             } else if(correspondencia == cashHand){
@@ -35,22 +35,29 @@ function calcularTodo(){
                 <div id="resultados">
                 <div class="card-body" style="background-color: lightseagreen;">
                     Los resultados de la ${semana} son: <br>
-                    Ambos estan saldados por que recibieron lo que les correspondia.
+                    Corresponde $${correspondencia} a cada uno. Ambos estan saldados por que recibieron lo que les correspondia.
                     </div>
                     </div>`
-            }else {
+            }else if(cashBrut < cashHand && cashBrut < peaje){
+                document.getElementById('resultados').innerHTML=`
+                <div id="resultados">
+                <div class="card-body" style="background-color: lightseagreen;">
+                    Ocurrió un error. Datos ingresados incorrectos.
+                    </div>
+                    </div>`
+            }else{
                 var balanc = cashHand - correspondencia;
                 document.getElementById('resultados').innerHTML=`
                 <div id="resultados">
                 <div class="card-body" style="background-color: lightseagreen;">
                     Los resultados de la ${semana} son: <br>
-                    ${nombre} debe pasarme la suma de $${balanc}.
+                    Corresponde $${correspondencia} a cada uno. ${nombre} debe pasarme la suma de $${balanc}.
                     </div>
                     </div>`
-                
+            }
             }
         }
-}
+
 function resetAll(){
     document.getElementById("myForm").reset();
     document.getElementById('resultados').innerHTML=``
